@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Mi Beba ❤️</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #0f0f1a, #1e1e35);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 420px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 1.9rem;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            min-height: 140px;
+            margin-bottom: 25px;
+        }
+
+        .quote {
+            font-style: italic;
+            opacity: 0.85;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 16px;
+            background: #ff4da6;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            background: #ff1a8c;
+            transform: scale(1.05);
+        }
+
+        /* Corazones */
+        .heart {
+            position: absolute;
+            bottom: -20px;
+            font-size: 20px;
+            animation: float 4s linear forwards;
+            opacity: 0.8;
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(-100vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Estrellas de fondo */
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(1px 1px at 20% 30%, white, transparent),
+                radial-gradient(1.5px 1.5px at 80% 40%, white, transparent),
+                radial-gradient(1px 1px at 50% 70%, white, transparent),
+                radial-gradient(1.2px 1.2px at 10% 80%, white, transparent),
+                radial-gradient(1px 1px at 90% 10%, white, transparent),
+                radial-gradient(1.4px 1.4px at 60% 20%, white, transparent);
+            background-size: 200px 200px;
+            animation:
+                moveStars 80s linear infinite,
+                twinkle 4s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes moveStars {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: -1200px 600px;
+            }
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.6;
+            }
+
+            50% {
+                opacity: 0.9;
+            }
+        }
+
+        /* Estrella fugaz */
+        .shooting-star {
+            position: fixed;
+            top: -10%;
+            left: 50%;
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, white, transparent);
+            opacity: 0.8;
+            transform: rotate(-45deg);
+            animation: shoot 1.2s ease-out forwards;
+            z-index: 1;
+        }
+
+        @keyframes shoot {
+            from {
+                transform: translate(0, 0) rotate(-45deg);
+                opacity: 1;
+            }
+
+            to {
+                transform: translate(-600px, 600px) rotate(-45deg);
+                opacity: 0;
+            }
+        }
+
+        /* 💫 Intensidad final */
+        .stars.final {
+            animation:
+                moveStars 80s linear infinite,
+                glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                opacity: 0.8;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+
+        /* Botón final animado */
+        .final-btn {
+            animation: pulse 1.4s infinite;
+            background: linear-gradient(135deg, #ff4da6, #ff7ac8);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 rgba(255, 77, 166, 0.7);
+            }
+
+            50% {
+                transform: scale(1.06);
+                box-shadow: 0 0 18px rgba(255, 77, 166, 0.9);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 rgba(255, 77, 166, 0.7);
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .message {
+                font-size: 1.05rem;
+                min-height: 160px;
+            }
+
+            button {
+                padding: 18px;
+                font-size: 1.05rem;
+                border-radius: 20px;
+            }
+
+            body {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stars"></div>
+
+    <div class="container">
+        <h1>Para ti, mi beba 💖</h1>
+        <div id="text" class="message"></div>
+        <button id="actionBtn" onclick="nextMessage()">Toca aquí ❤️</button>
+    </div>
+
+    <audio id="tapSound" src="tap.mp3"></audio>
+
+    <script>
+
+        const messages = [
+            "Desde el momento en que me dijiste que tenías miedo de que yo me fuera…",
+            "supe que lo único que quería era quedarme aún más.",
+            "No eres demasiado. No eres difícil.",
+            "Eres mi lugar seguro.",
+            "Eres mi universo entero.",
+            "Eres mi paz y también mi caos favorito.",
+            "Eres mi futuro.",
+            "Eres mi esposa.",
+            "Y te elijo. Todos los días. Incluso cuando dudas de ti.",
+            "<span class='quote'>“Así que ahora estamos enamorados…”</span>",
+            "<span class='quote'>“Abraza a este mundo seco…”</span>",
+            "<span class='quote'>“Lee, ¿Qué es la esperanza?”</span>",
+            "Esta canción siempre me hará pensar en nosotras.",
+            "Y la siguiente… es mi promesa para ti. 🎧"
+        ];
+
+        let index = 0;
+        const textElement = document.getElementById("text");
+        const tapSound = document.getElementById("tapSound");
+
+        function typeWriter(html, i = 0) {
+            if (i === 0) textElement.innerHTML = "";
+            if (i < html.length) {
+                textElement.innerHTML += html.charAt(i);
+                setTimeout(() => typeWriter(html, i + 1), 30);
+            }
+        }
+
+        function createHearts() {
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement("div");
+                heart.classList.add("heart");
+                heart.innerHTML = "💖";
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.fontSize = (16 + Math.random() * 20) + "px";
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 4000);
+            }
+        }
+
+        function shootingStar() {
+            const star = document.createElement("div");
+            star.classList.add("shooting-star");
+            document.body.appendChild(star);
+
+            setTimeout(() => {
+                star.remove();
+            }, 1200);
+        }
+
+        setInterval(() => {
+            if (Math.random() < 0.5) { // ~0.5% probabilidad
+                shootingStar();
+            }
+        }, 12000);
+
+
+        function nextMessage() {
+            tapSound.currentTime = 0;
+            tapSound.play();
+
+            document.getElementById("actionBtn").disabled = true;
+            setTimeout(() => {
+                document.getElementById("actionBtn").disabled = false;
+            }, 900);
+
+
+            if (index < messages.length) {
+                const msg = messages[index];
+
+                if (msg.includes("<span")) {
+                    textElement.innerHTML = msg;
+                } else {
+                    typeWriter(msg);
+                }
+
+                if (msg.includes("universo")) {
+                    createHearts();
+                }
+
+                index++;
+            } else {
+                document.querySelector(".stars").classList.add("final");
+                const btn = document.getElementById("actionBtn");
+                btn.textContent = "Escúchala, mi beba 🎧";
+                btn.classList.add("final-btn");
+
+                btn.onclick = () => {
+                    window.open(
+                        "https://open.spotify.com/intl-es/track/7D0RhFcb3CrfPuTJ0obrod?si=528982c398f941d1",
+                        "_blank"
+                    );
+                };
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
